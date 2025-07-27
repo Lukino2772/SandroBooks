@@ -9,6 +9,8 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     register_extensions(app)
+    register_commands(app)
+    return app
 
 def register_extensions(app):
     db.init_app(app)

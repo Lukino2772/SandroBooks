@@ -1,7 +1,7 @@
 import click
 from flask.cli import with_appcontext
-
 from src.ext import db
+
 
 @click.command("init_db")
 @with_appcontext
