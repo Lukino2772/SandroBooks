@@ -1,0 +1,29 @@
+{% extends "partials/base.html" %}
+
+{% block title %}
+- Register
+{% endblock %}
+
+{% block content %}
+<div class="container bg-white mt-5 p-3 rounded shadow h-100">
+
+  <form class="row p-4" method="post" enctype="multipart/form-data">
+  {% for errors in form.errors.values() %}
+    {% for error in errors %}
+      <p class="text-danger">* {{ error }}</p>
+    {% endfor %}
+  {% endfor %}
+    {{ form.hidden_tag() }}
+    {{ form.username(placeholder = form.username.label.text, class = "form-control") }}
+    {{ form.password(placeholder = form.password.label.text, class = "form-control mt-2") }}
+    {{ form.repeat_password(placeholder = form.repeat_password.label.text, class = "form-control mt-2") }}
+
+    {{ form.birthday(class="form-control mt-2") }}
+
+    {{ form.country(class="form-select mt-2") }}
+
+    {{ form.gender(class="mt-2") }}
+    {{ form.submit(class = "btn btn-primary mt-2") }}
+  </form>
+</div>
+{% endblock %}

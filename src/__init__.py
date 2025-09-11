@@ -1,10 +1,10 @@
 from flask import Flask
-from src.ext import db, login_manager
 from src.config import Config
+from src.ext import db, migrate
+from src.views import main_blueprint, auth_blueprint, book_blueprint
 from src.commands import init_db, populate_db
 
-from src.blueprints.admin import admin_bp
-
+BLUEPRINTS = [main_blueprint, auth_blueprint, book_blueprint]
 COMMANDS = [init_db, populate_db]
 
 def create_app():
@@ -16,21 +16,14 @@ def create_app():
     return app
 
 def register_extensions(app):
+    # Flask-SQLAlchemy
     db.init_app(app)
-    login_manager.init_app(app)
-    login_manager.login_view = "admin.login"
-    login_manager.login_message_category = "warning"
-
-    @login_manager.user_loader
-    def load_user(user_id: str):
-        from src.models.user import User
-        try:
-            return User.query.get(int(user_id))
-        except Exception:
-            return None
+    # Flask-Migrate
+    migrate.init_app(app, db)
 
 def register_blueprints(app):
-    app.register_blueprint(admin_bp)
+    for blueprint in BLUEPRINTS:
+        app.register_blueprint(blueprint)
 
 def register_commands(app):
     for command in COMMANDS:

@@ -1,0 +1,29 @@
+{% extends "partials/base.html" %}
+
+{% block title %}
+- {{product.name}}
+{% endblock %}
+
+{% block content %}
+<div class="container bg-white mt-5 p-3 rounded shadow">
+    <div class="row">
+        <div class="h-25 text-center">
+            <img src="/src/static/assets/{{ product.image }}">
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Book Name:</th>
+              <td>{{ product.name }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Price</th>
+              <td>{{ product.price }}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

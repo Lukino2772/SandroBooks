@@ -1,0 +1,59 @@
+from flask import Blueprint, render_template, url_for, redirect
+from uuid import uuid4
+from os import path
+from src.views.book.forms import BookForm
+from src.models.book import Book
+from src.config import Config
+
+
+book_blueprint = Blueprint("users", __name__)
+
+@book_blueprint.route("/add_book", methods=["GET", "POST"])
+def add_book():
+    form = BookForm()
+    if form.validate_on_submit():
+        file = form.image.data
+        _, extension = path.splitext(file.filename)
+        filename = f"{uuid4()}{extension}"
+        file.save(path.join(Config.UPLOAD_PATH, filename))
+        new_book = Book(name=form.name.data, price=form.price.data, image=filename)
+
+        new_book.create()
+
+        return redirect(url_for("main.index"))
+    return render_template("book/add_book.html", form=form)
+
+@book_blueprint.route("/edit_book/<int:id>", methods=["GET", "POST"])
+def edit_book(id):
+    book = Book.query.get(id)
+
+    form = BookForm(name=book.name, price=book.price)
+    if form.validate_on_submit():
+
+        book.name = form.name.data
+        book.price = form.price.data
+        book.save()
+
+        if form.image.data:
+            file = form.image.data
+            _, extension = path.splitext(file.filename)
+            filename = f"{uuid4()}{extension}"
+            file.save(path.join(Config.UPLOAD_PATH, filename))
+
+            book.image = filename
+
+        return redirect(url_for("main.index"))
+
+    return render_template("book/add_book.html", form=form)
+
+@book_blueprint.route("/delete_book/<int:id>")
+def delete_book(id):
+    book = Book.query.get(id)
+    book.delete()
+
+    return redirect(url_for("main.index"))
+
+@book_blueprint.route("/view/<int:book_id>")
+def view_product(book_id):
+    chosen_product = Book.query.get(book_id)
+    return render_template("book/view_book.html", product=chosen_product)
