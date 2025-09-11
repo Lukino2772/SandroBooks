@@ -25,6 +25,7 @@ def register_extensions(app):
 
     #Flask-Login
     login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
 
     @login_manager.user_loader
     def load_user(_id):

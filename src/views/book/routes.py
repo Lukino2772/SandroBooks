@@ -4,11 +4,13 @@ from os import path
 from src.views.book.forms import BookForm
 from src.models.book import Book
 from src.config import Config
+from src.utils import admin_required
 
 
 book_blueprint = Blueprint("users", __name__)
 
 @book_blueprint.route("/add_book", methods=["GET", "POST"])
+@admin_required
 def add_book():
     form = BookForm()
     if form.validate_on_submit():
@@ -24,6 +26,7 @@ def add_book():
     return render_template("book/add_book.html", form=form)
 
 @book_blueprint.route("/edit_book/<int:id>", methods=["GET", "POST"])
+@admin_required
 def edit_book(id):
     book = Book.query.get(id)
 
@@ -47,7 +50,9 @@ def edit_book(id):
     return render_template("book/add_book.html", form=form)
 
 @book_blueprint.route("/delete_book/<int:id>")
+@admin_required
 def delete_book(id):
+
     book = Book.query.get(id)
     book.delete()
 

@@ -1,5 +1,6 @@
 from flask.cli import with_appcontext
 from src.models.book import Book
+from src.models.user import User
 from src.ext import db
 import click
 
@@ -28,3 +29,4 @@ def populate_db():
         new_book = Book(name=book["name"], price=book["price"], image=book["img"])
         db.session.add(new_book)
     db.session.commit()
+

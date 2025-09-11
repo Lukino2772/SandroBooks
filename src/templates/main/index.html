@@ -20,8 +20,10 @@
                     </p>
                     <div class="border-top">
                         <a href="/view/{{ book.id }}" class="btn btn-warning mt-2">Veiw</a>
-                        <a href="/edit_book/{{ book.id }}" class="btn btn-warning mt-2">Edit</a>
-                        <a href="/delete_book/{{ book.id }}" class="btn btn-danger mt-2">Delete</a>
+                        {% if current_user.is_authenticated %}
+                            <a href="/edit_book/{{ book.id }}" class="btn btn-warning mt-2">Edit</a>
+                            <a href="/delete_book/{{ book.id }}" class="btn btn-danger mt-2">Delete</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
