@@ -1,7 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SubmitField, DateField, RadioField, SelectField, IntegerField
+from wtforms.fields import StringField, PasswordField, SubmitField, DateField, RadioField, SelectField
 from wtforms.validators import DataRequired, length, equal_to, ValidationError
 from string import ascii_uppercase, ascii_lowercase, digits, punctuation
+
+class LoginForm(FlaskForm):
+    username = StringField("Username")
+    password = PasswordField("Password")
+    login = SubmitField("Login")
 
 class RegisterForm(FlaskForm):
     username = StringField("Enter Username", validators=[DataRequired("მომხმარებლის სახელის ველის შევსება სავალდებულოა"), length(min=3, max=32)])
