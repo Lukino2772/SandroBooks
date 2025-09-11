@@ -1,9 +1,11 @@
 from flask import Flask
+from flask_admin.contrib.sqla import ModelView
 from src.config import Config
-from src.ext import db, migrate, login_manager
+from src.ext import db, migrate, login_manager, admin
 from src.views import main_blueprint, auth_blueprint, book_blueprint
 from src.commands import init_db, populate_db
 from src.models.user import User
+from src.models.book import Book
 
 BLUEPRINTS = [main_blueprint, auth_blueprint, book_blueprint]
 COMMANDS = [init_db, populate_db]
@@ -30,6 +32,11 @@ def register_extensions(app):
     @login_manager.user_loader
     def load_user(_id):
         return User.query.get(_id)
+
+    # Flask_admin
+    admin.init_app(app)
+    admin.add_view(ModelView(User, db.session))
+    admin.add_view(ModelView(Book, db.session))
 
 def register_blueprints(app):
     for blueprint in BLUEPRINTS:
