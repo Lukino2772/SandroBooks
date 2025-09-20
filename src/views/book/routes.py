@@ -18,7 +18,7 @@ def add_book():
         _, extension = path.splitext(file.filename)
         filename = f"{uuid4()}{extension}"
         file.save(path.join(Config.UPLOAD_PATH, filename))
-        new_book = Book(name=form.name.data, price=form.price.data, image=filename)
+        new_book = Book(title=form.title.data, price=form.price.data, image=filename)
 
         new_book.create()
 
@@ -30,10 +30,10 @@ def add_book():
 def edit_book(id):
     book = Book.query.get(id)
 
-    form = BookForm(name=book.name, price=book.price)
+    form = BookForm(title=book.title, price=book.price)
     if form.validate_on_submit():
 
-        book.name = form.name.data
+        book.title = form.title.data
         book.price = form.price.data
         book.save()
 
@@ -59,6 +59,6 @@ def delete_book(id):
     return redirect(url_for("main.index"))
 
 @book_blueprint.route("/view/<int:book_id>")
-def view_product(book_id):
-    chosen_product = Book.query.get(book_id)
-    return render_template("book/view_book.html", product=chosen_product)
+def view_book(book_id):
+    chosen_book = Book.query.get(book_id)
+    return render_template("book/view_book.html", book=chosen_book)

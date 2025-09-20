@@ -1,26 +1,26 @@
 {% extends "partials/base.html" %}
 
 {% block title %}
-- {{product.name}}
+- {{book.title}}
 {% endblock %}
 
 {% block content %}
 <div class="container bg-white mt-5 p-3 rounded shadow">
     <div class="row">
         <div class="h-25 text-center">
-            <img src="/src/static/assets/{{ product.image }}">
+             <img src="{{ url_for('static', filename='assets/' ~ book.image) }}" alt="image_book">
         </div>
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Book Name:</th>
-              <td>{{ product.name }}</td>
+              <th scope="col">Book Title:</th>
+              <td>{{ book.title }}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th>Price</th>
-              <td>{{ product.price }}</td>
+              <td>{{ book.price }} ₾</td>
             </tr>
           </tbody>
         </table>
