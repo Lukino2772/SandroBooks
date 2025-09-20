@@ -2,6 +2,10 @@ from src.ext import db
 
 class BaseModel(db.Model):
     __abstract__ = True
+    def __init__(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
     def create(self, commit=True):
         db.session.add(self)
         if commit:

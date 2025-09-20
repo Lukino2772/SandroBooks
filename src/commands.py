@@ -26,7 +26,23 @@ def populate_db():
     ]
 
     for book in books:
-        new_book = Book(title=book["title"], price=book["price"], image=book["img"])
+        new_book = Book(
+            title=book["title"],
+            price=book["price"],
+            image=book["img"],
+            description="No description available",
+            publication_year=None,
+            page_count=None,
+            format=None,
+            ISBN=None,
+            cover_type=None,
+            online_link=None,
+            audio_link=None,
+            android_link=None,
+            ios_link=None,
+            about_series=None
+        )
         db.session.add(new_book)
     db.session.commit()
+
 
