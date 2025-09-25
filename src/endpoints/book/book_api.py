@@ -1,5 +1,5 @@
 from flask_restx import Resource, fields, reqparse
-from src.ext import api, db
+from src.ext import api
 from src.models.book import Book
 from src.enums import CoverType, Booktype, Audience
 

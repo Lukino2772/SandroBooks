@@ -1,6 +1,5 @@
 from flask.cli import with_appcontext
 from src.models.book import Book
-from src.models.user import User
 from src.ext import db
 import click
 
