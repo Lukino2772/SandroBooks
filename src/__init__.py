@@ -1,6 +1,4 @@
 from flask import Flask
-from sqlalchemy import Sequence
-
 from src.admin_views.base import SecureModelView
 from src.config import Config
 from src.ext import db, migrate, login_manager, admin, api
