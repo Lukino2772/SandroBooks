@@ -12,11 +12,11 @@ class BookView(ModelView):
         'ios_link',
     )
 
-    def _description_formatter(view, context, model, name):
+    def _description_formatter(view, model, name):
         desc = getattr(model, name) or ""
         return desc[:100] + ('...' if len(desc) > 100 else '')
 
-    def _link_formatter(view, context, model, name):
+    def _link_formatter(view, model, name):
         url = getattr(model, name)
         if url:
             return Markup(f'<a href="{url}" target="_blank">View</a>')
