@@ -16,7 +16,7 @@ def login():
             if next:
                 return redirect(next)
             flash("Logged in!", "success")
-            return redirect(url_for("main.index"))
+            return redirect(url_for("admin.index"))
         else:
             flash("Username or password is incorrect", "danger")
     return render_template("auth/login.html", form=form)

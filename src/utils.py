@@ -6,6 +6,6 @@ def admin_required(func):
     @wraps(func)
     def admin_view(*args, **kwargs):
         if not current_user.is_authenticated:
-            return redirect(url_for('main.index'))
+            return redirect(url_for('login.index'))
         return func(*args, **kwargs)
     return admin_view
