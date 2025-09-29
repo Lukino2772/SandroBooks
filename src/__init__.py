@@ -2,12 +2,12 @@ from flask import Flask
 from src.admin_views.base import SecureModelView
 from src.config import Config
 from src.ext import db, migrate, login_manager, admin, api
-from src.views import  auth_blueprint, book_blueprint
+from src.views import  auth_blueprint
 from src.commands import init_db, populate_db
 from src.models.user import User
 from src.models.book import Book
 
-BLUEPRINTS = [ auth_blueprint, book_blueprint]
+BLUEPRINTS = [auth_blueprint]
 COMMANDS = [init_db, populate_db]
 
 def create_app():
