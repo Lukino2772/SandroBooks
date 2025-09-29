@@ -1,4 +1,5 @@
 from flask import Flask
+from src.admin_views import BookView
 from src.admin_views.base import SecureModelView
 from src.config import Config
 from src.ext import db, migrate, login_manager, admin, api
@@ -6,6 +7,7 @@ from src.views import  auth_blueprint
 from src.commands import init_db, populate_db
 from src.models.user import User
 from src.models.book import Book
+import src.admin_views
 
 BLUEPRINTS = [auth_blueprint]
 COMMANDS = [init_db, populate_db]
@@ -35,8 +37,8 @@ def register_extensions(app):
 
     # Flask_admin
     admin.init_app(app)
-    admin.add_view(SecureModelView(User, db.session))
-    admin.add_view(SecureModelView(Book, db.session))
+    admin.add_view(SecureModelView(Book, db.session, name="Books Default", endpoint="books_default"))
+    src.admin_views.register_admin_views(admin, db)
 
     #Flask_RestX
     api.init_app(app)
